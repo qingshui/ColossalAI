@@ -204,13 +204,13 @@ def get_cuda_cc_flag() -> List[str]:
     import torch
 
     cc_flag = []
-    max_arch = "".join(str(i) for i in torch.cuda.get_device_capability())
+    #max_arch = "".join(str(i) for i in torch.cuda.get_device_capability())
     for arch in torch.cuda.get_arch_list():
         res = re.search(r"sm_(\d+)", arch)
         if res:
             arch_cap = res[1]
-            if int(arch_cap) >= 60 and int(arch_cap) <= int(max_arch):
-                cc_flag.extend(["-gencode", f"arch=compute_{arch_cap},code={arch}"])
+            #if int(arch_cap) >= 60 and int(arch_cap) <= int(max_arch):
+            cc_flag.extend(["-gencode", f"arch=compute_{arch_cap},code={arch}"])
     return cc_flag
 
 
@@ -225,5 +225,5 @@ def append_nvcc_threads(nvcc_extra_args: List[str]) -> List[str]:
 
     bare_metal_major, bare_metal_minor = get_cuda_bare_metal_version(CUDA_HOME)
     if int(bare_metal_major) >= 11 and int(bare_metal_minor) >= 2:
-        return nvcc_extra_args + ["--threads", "4"]
+        return nvcc_extra_args + ["--threads", "30"]
     return nvcc_extra_args

@@ -52,7 +52,7 @@ def launch(
     backend = cur_accelerator.communication_backend
 
     # init default process group
-    init_method = f"tcp://[{host}]:{port}"
+    init_method = f"tcp://{host}:{port}"
     dist.init_process_group(rank=rank, world_size=world_size, backend=backend, init_method=init_method)
 
     # set cuda device

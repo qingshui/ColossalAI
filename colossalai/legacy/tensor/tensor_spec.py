@@ -17,5 +17,16 @@ class ColoTensorSpec:
     """
 
     pg: ProcessGroup
-    dist_attr: Optional[_DistSpec] = _DistSpec(DistPlacementPattern.REPLICATE)
+    dist_attr: Optional[_DistSpec] = None
     compute_attr: Optional[ComputeSpec] = None
+
+    def __init__(self, pg: ProcessGroup = None, 
+                 dist_attr: _DistSpec = _DistSpec(DistPlacementPattern.REPLICATE),
+                 compute_attr: ComputeSpec = None):
+        """Init ColoTensorSpec.
+        Args:
+            pg (ProcessGroup): The process group of the tensor.
+        """
+        self.pg = pg
+        self.dist_attr = dist_attr
+        self.compute_attr = compute_attr
